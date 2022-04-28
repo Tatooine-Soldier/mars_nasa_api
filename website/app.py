@@ -13,7 +13,9 @@ api_key = 'HHzOZfKZgwxrajynxldzhmLvt2SjTlU0OkzS81yA'
 
 @app.route("/")
 def main():
+
     resp = fetchMarsData()
+    print(resp)
     #str(resp)
     return render_template("home.html", sols=resp)
     # resp = fetchAsteroidNeowsFeed()
@@ -35,15 +37,28 @@ def fetchMarsData():
     
         
 def getAvgTemp(marsdata, yearlist):
-    final_dict = {}
-    print(yearlist)
-    i = 6
-    while i > 0:
+    final_temp_dict = {}
+    final_wind_dict = {}
+    final_dict = {} #put both dictionaries in this dictionary
+    #print(yearlist)
+    i = 0
+    while i < 6:
         yr = yearlist[i]
-        print("Average temperature on Mars on sol {} was {}".format(yearlist[i],marsdata[yr]['AT']['av']))
-        final_dict[yearlist[i]] = marsdata[yr]['AT']['av']
-        i = i-1
+        # print("Average temperature on Mars on sol {} was {}".format(yearlist[i],marsdata[yr]['AT']['av']))
+        final_temp_dict[yearlist[i]] = marsdata[yr]['AT']['av']
+        final_wind_dict[yearlist[i]] = marsdata[yr]['HWS']['av']
+        i = i+1
+    final_dict["temperature"] = final_temp_dict
+    final_dict["wind"] = final_wind_dict
     return final_dict
+
+# def getAvgWs(marsdata, yearlist):
+#     ws_list = []
+#     i = 0
+#     while i < 6:
+
+#         ws_list.append()
+
 
 
 
