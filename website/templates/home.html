@@ -8,18 +8,16 @@
     <section id="homepage">
         <section class="sols-temp-container">
             <section class="sols-temp">
-                {% for top_layer_sol, top_temp in sols.items() %}  
-                    {% for sol, temp in top_temp.items() %}
+                {% for sol, list_temp in sols.items() %}  
                         <section class="card">
                             <section class="card-content-container">
                                 <section class="card-content">
                                     <section class="sol-picture"><img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/9382/production/_120526773_whatsubject.jpg" id="card_mars_pic" alt="pic rocks on mars"/></section>
                                     <section class="sol-literal">Sol: {{ sol }}</section>
-                                    <section class="temperature-literal">Avg Temp:{{temp}}</section>
+                                    <section class="temperature-literal">Avg Temp: {{list_temp[0]}}<br>Avg WS: {{list_temp[1]}}</section>
                                 </section>
                             </section>
                         </section>
-                    {% endfor %}
                 {% endfor %}
             </section>
         </section>

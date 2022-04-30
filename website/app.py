@@ -45,11 +45,13 @@ def getAvgTemp(marsdata, yearlist):
     while i < 6:
         yr = yearlist[i]
         # print("Average temperature on Mars on sol {} was {}".format(yearlist[i],marsdata[yr]['AT']['av']))
-        final_temp_dict[yearlist[i]] = marsdata[yr]['AT']['av']
-        final_wind_dict[yearlist[i]] = marsdata[yr]['HWS']['av']
+        my_list = [marsdata[yr]['AT']['av'], marsdata[yr]['HWS']['av']]
+        final_dict[yearlist[i]] = my_list
+        # final_temp_dict[yearlist[i]] = marsdata[yr]['AT']['av']
+        # final_wind_dict[yearlist[i]] = marsdata[yr]['HWS']['av']
         i = i+1
-    final_dict["temperature"] = final_temp_dict
-    final_dict["wind"] = final_wind_dict
+    # final_dict["temperature"] = final_temp_dict
+    # final_dict["wind"] = final_wind_dict
     return final_dict
 
 # def getAvgWs(marsdata, yearlist):
