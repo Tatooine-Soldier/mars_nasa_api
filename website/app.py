@@ -4,6 +4,7 @@ import requests
 from urllib.request import urlretrieve
 from pprint import PrettyPrinter, pprint
 import json
+from datetime import datetime
 
 pp = PrettyPrinter()
 
@@ -21,6 +22,12 @@ def main():
     # resp = fetchAsteroidNeowsFeed()
     # return "<p>{}</p>".format(resp)
 
+@app.route("/iss")
+def main_iss():
+    data = getISS()
+    print(data)
+    return render_template("iss.html", iss_data=data)
+
 def fetchMarsData():
     URL_MarsFeed = "https://mars.nasa.gov/rss/api/?feed=weather&category=insight_temperature&feedtype=json&ver=1.0"
     response = requests.get(URL_MarsFeed).json()
@@ -37,8 +44,6 @@ def fetchMarsData():
     
         
 def getAvgTemp(marsdata, yearlist):
-    final_temp_dict = {}
-    final_wind_dict = {}
     final_dict = {} #put both dictionaries in this dictionary
     #print(yearlist)
     i = 0
@@ -47,22 +52,23 @@ def getAvgTemp(marsdata, yearlist):
         # print("Average temperature on Mars on sol {} was {}".format(yearlist[i],marsdata[yr]['AT']['av']))
         my_list = [marsdata[yr]['AT']['av'], marsdata[yr]['HWS']['av']]
         final_dict[yearlist[i]] = my_list
-        # final_temp_dict[yearlist[i]] = marsdata[yr]['AT']['av']
-        # final_wind_dict[yearlist[i]] = marsdata[yr]['HWS']['av']
         i = i+1
-    # final_dict["temperature"] = final_temp_dict
-    # final_dict["wind"] = final_wind_dict
     return final_dict
 
-# def getAvgWs(marsdata, yearlist):
-#     ws_list = []
-#     i = 0
-#     while i < 6:
 
-#         ws_list.append()
-
-
-
+def getISS():
+    URL_ISSFeed = "http://api.open-notify.org/iss-now.json"
+    response = requests.get(URL_ISSFeed).json()
+    with open("ISS_data.json", "w") as file_object:
+        json.dump(response, file_object)
+    with open("ISS_data.json","r") as file_object:  
+        data = json.load(file_object)
+    stamp = data["timestamp"]
+    stamp_time = datetime.utcfromtimestamp(stamp).strftime('%Y-%m-%d %H:%M:%S')
+    
+    iss_dict = {}
+    iss_dict[stamp_time] = data
+    return iss_dict
 
 # def fetchAsteroidNeowsFeed():
 #     print("calling")

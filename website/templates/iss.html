@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    ISS tracking
+{% endblock %}
+
+{% block content %}
+    <section class="iss-details-container">
+        {% for kdate,item in iss_data.items() %}
+            <section class="tcontainer">
+                <section class="iss-date-container">{{kdate}}</section>
+                <section class="iss-coord-container">{{ item["iss_position"]["latitude"] }} {{ item["iss_position"]["longitude"] }}</section>
+            </section>
+        {% endfor %}
+    </section>
+{% endblock %}
