@@ -8,6 +8,7 @@
     <section class="iss-details-container">
         {% for kdate,item in iss_data.items() %}
             <section class="tcontainer">
+                <section class="iss-data-title">ISS Position:</section>
                 <section class="iss-date-container">{{kdate}}</section>
                 <section class="iss-coord-container">{{ item["iss_position"]["latitude"] }} {{ item["iss_position"]["longitude"] }}</section>
             </section>
