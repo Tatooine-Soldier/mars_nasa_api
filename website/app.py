@@ -5,6 +5,9 @@ from urllib.request import urlretrieve
 from pprint import PrettyPrinter, pprint
 import json
 from datetime import datetime
+import pandas as pd
+import matplotlib.pyplot as plt 
+import csv
 
 pp = PrettyPrinter()
 
@@ -65,10 +68,22 @@ def getISS():
         data = json.load(file_object)
     stamp = data["timestamp"]
     stamp_time = datetime.utcfromtimestamp(stamp).strftime('%Y-%m-%d %H:%M:%S')
-    
+    isscsv_list = [] #coords passed into csv gile
     iss_dict = {}
     iss_dict[stamp_time] = data
+    for kdate,item in iss_dict.items():
+        isscsv_list.append(item["iss_position"]["latitude"])
+        isscsv_list.append(item["iss_position"]["longitude"])
+    with open('iss_data.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(isscsv_list)
     return iss_dict
+
+
+# def issLocation():
+#     df = pd.read_csv('iss_data.csv')
+
+
 
 # def fetchAsteroidNeowsFeed():
 #     print("calling")
