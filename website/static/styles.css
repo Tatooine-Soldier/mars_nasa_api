@@ -120,3 +120,9 @@ body {
     border: solid white 1px;
 }
 
+.map-and-coords {
+    display: grid;
+    grid-template-rows: 20% 80%;
+    background-color: black;
+    padding: 10px;
+}

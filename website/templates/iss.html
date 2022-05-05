@@ -6,45 +6,46 @@
 
 {% block content %}
     <section class="iss-details-container">
-        {% for kdate,item in iss_data.items() %}
-            <section class="tcontainer">
-                <section class="iss-data-title">ISS Position:</section>
-                <section class="iss-date-container">{{kdate}}</section>
-                <section class="iss-coord-container"><b id="js_latitude">{{ item["iss_position"]["latitude"] }}</b> <b id="js_longitude">{{ item["iss_position"]["longitude"] }}</b></section>
-            </section>
-            <section class="map-container" id="map-container" style="width: 500px; height: 500px"> 
-            </section>
-                <script src=
-                "https://maps.googleapis.com/maps/api/js?key=AIzaSyDvAoglB6ce9mlnA0VRoYFC2EHLs3AetlA"></script>
-                <script type="text/javascript">
-                    function showLoc(pos) {
-                        let js_latt = document.getElementById("js_latitude").textContent;
-                        let js_long = document.getElementById("js_longitude").textContent;
-                        latt = js_latt;
-                        long = js_long;
-                        var lattlong = new google.maps.LatLng(latt, long);
-                        var OPTions = {
-                            center: lattlong,
-                            zoom: 10,
-                            mapTypeControl: true,
-                            navigationControlOptions: {
-                            style: google.maps.NavigationControlStyle.SMALL,
-                            },
-                        };
-                        var mapg = new google.maps.Map(
-                            document.getElementById("map-container"),
-                            OPTions
-                        );
-                        var markerg = new google.maps.Marker({
-                            position: lattlong,
-                            map: mapg,
-                            title: "You are here!",
-                        });
-                    }
-                </script>
-            
-        {% endfor %}
-        <button onclick="showLoc()">SHOW</button>
+        <section class="map-and-coords">
+            {% for kdate,item in iss_data.items() %}
+                <section class="tcontainer">
+                    <section class="iss-data-title">ISS Position:</section>
+                    <section class="iss-date-container">{{kdate}}</section>
+                    <section class="iss-coord-container"><b id="js_latitude">{{ item["iss_position"]["latitude"] }}</b> <b id="js_longitude">{{ item["iss_position"]["longitude"] }}</b></section>
+                </section>
+                <div class="map-container" id="map-container" style="width: 400px; height: 300px"> 
+                </div>
+                    <script src=
+                    "https://maps.googleapis.com/maps/api/js?key=AIzaSyDvAoglB6ce9mlnA0VRoYFC2EHLs3AetlA"></script>
+                    <script type="text/javascript">
+                        function showLoc(pos) {
+                            let js_latt = document.getElementById("js_latitude").textContent;
+                            let js_long = document.getElementById("js_longitude").textContent;
+                            latt = js_latt;
+                            long = js_long;
+                            var lattlong = new google.maps.LatLng(latt, long);
+                            var OPTions = {
+                                center: lattlong,
+                                zoom: 5,
+                                mapTypeControl: true,
+                                navigationControlOptions: {
+                                style: google.maps.NavigationControlStyle.SMALL,
+                                },
+                            };
+                            var mapg = new google.maps.Map(
+                                document.getElementById("map-container"),
+                                OPTions
+                            );
+                            var markerg = new google.maps.Marker({
+                                position: lattlong,
+                                map: mapg,
+                                title: "ISS position"
+                                // icon:"./ISS_pic.png"
+                            });
+                        }
+                    </script>      
+            {% endfor %}
+        </section> 
     </section>
-
+    <button onclick="showLoc()">SHOW</button>
 {% endblock %}
